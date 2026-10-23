@@ -3,5 +3,20 @@ data/
 downloads/
 *.log
 .env
+.env.*
 screenshot*.png
 debug_*
+
+# локальные cookie и сессии, которые не должны попасть в git
+cookies*.txt
+*_cookies.txt
+*cookies*.txt
+session*.json
+*.session
+*.session-journal
+browser-profile/
+*.sqlite
+*.sqlite-journal
+
+.DS_Store
+Thumbs.db
