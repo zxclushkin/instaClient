@@ -1,0 +1,7 @@
+﻿node_modules/
+data/
+downloads/
+*.log
+.env
+screenshot*.png
+debug_*

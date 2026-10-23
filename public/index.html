@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Insta Browser</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Grand+Hotel&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="sidebar-logo" title="Insta Browser">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+          <circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="1.8" />
+          <circle cx="17.3" cy="6.7" r="1.3" fill="currentColor" />
+        </svg>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="side-btn is-active" data-action="home" title="Лента">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+        </button>
+        <button class="side-btn" data-action="explore" title="Рекомендации">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8" /><path d="m15.5 8.5-2 5-5 2 2-5z" fill="currentColor" /></svg>
+        </button>
+        <button class="side-btn" data-action="profile" title="Профиль">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8" /><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" /></svg>
+        </button>
+        <button class="side-btn" data-action="refresh" title="Обновить">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="side-btn side-avatar-btn" data-action="my-profile" id="side-profile-btn" title="Мой профиль" hidden>
+          <span class="side-avatar" id="side-avatar">IG</span>
+        </button>
+        <button class="side-btn" data-action="login" id="side-login-btn" title="Войти" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5M10 8l4 4-4 4M4 12h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </button>
+        <button class="side-btn" data-action="logout" id="side-logout-btn" title="Выйти" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5M14 8l4 4-4 4M8 12h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </button>
+      </div>
+    </aside>
+
+    <main class="page">
+      <div class="layout">
+        <section class="feed-column">
+          <div class="feed-top">
+            <div class="segmented">
+              <button class="seg-btn is-active" data-source="feed">Подписки</button>
+              <button class="seg-btn" data-source="explore">Рекомендации</button>
+            </div>
+            <div class="feed-top-right">
+              <span class="updated" id="updated-text">—</span>
+              <button class="ghost-btn" id="refresh-btn">Обновить</button>
+            </div>
+          </div>
+
+          <div class="stories" id="stories"></div>
+          <div class="posts" id="posts"></div>
+
+          <div class="empty" id="feed-empty" hidden>
+            <p id="feed-empty-title">Постов пока нет.</p>
+            <p class="muted" id="feed-empty-text">Лента обновляется сама каждые 45 секунд.</p>
+            <button class="primary-btn" id="empty-explore-btn" hidden>Открыть «Рекомендации»</button>
+          </div>
+          <div class="posts" id="feed-loading" hidden></div>
+        </section>
+
+        <aside class="right-rail">
+          <div class="rail-account" id="rail-account" title="Мой профиль">
+            <div class="rail-avatar" id="rail-avatar">IG</div>
+            <div class="rail-account-info">
+              <div class="rail-account-name" id="rail-account-name">Гость</div>
+              <div class="rail-account-sub" id="rail-account-sub">Войдите в Instagram</div>
+            </div>
+            <button class="link-btn" id="rail-login-btn">Войти</button>
+            <button class="link-btn" id="rail-logout-btn" hidden>Выйти</button>
+          </div>
+
+          <div class="rail-block">
+            <div class="rail-title">VPN</div>
+            <div class="rail-vpn" id="vpn-info">—</div>
+          </div>
+
+          <div class="rail-block" id="suggestions-block">
+            <div class="rail-head">
+              <span class="rail-title">Рекомендации</span>
+              <span class="rail-link-muted" id="suggestions-hint"></span>
+            </div>
+            <div class="suggestions" id="suggestions"></div>
+          </div>
+
+          <div class="rail-block">
+            <div class="rail-title">Скачивание</div>
+            <p class="rail-text">
+              Откройте профиль и нажмите «Скачать все посты» — файлы сохранятся в папку
+              <code>downloads/ник</code>.
+            </p>
+            <button class="link-btn" id="open-downloads-btn" hidden>Открыть последнюю папку</button>
+          </div>
+
+          <footer class="rail-footer">
+            <span>Insta Browser Client</span>
+            <span>Локальный доступ · 127.0.0.1</span>
+          </footer>
+        </aside>
+      </div>
+
+      <section class="profile-view" id="profile-view" hidden>
+        <form class="profile-search" id="profile-form">
+          <input id="profile-input" type="text" placeholder="Никнейм в Instagram, например gosu10m" autocomplete="off" />
+          <button class="primary-btn" type="submit">Открыть профиль</button>
+        </form>
+
+        <div class="profile-header" id="profile-header" hidden></div>
+
+        <div class="profile-actions" id="profile-actions" hidden>
+          <button class="primary-btn" id="download-profile-btn">Скачать все посты</button>
+          <button class="ghost-btn" id="open-downloads-profile-btn" hidden>Открыть папку</button>
+          <button class="ghost-btn" id="profile-open-instagram-btn" hidden>Открыть в Instagram</button>
+          <span class="download-status" id="download-status" hidden></span>
+        </div>
+
+        <div class="profile-grid" id="profile-grid"></div>
+        <div class="empty" id="profile-empty" hidden>
+          <p>Введите никнейм, чтобы посмотреть посты.</p>
+        </div>
+        <div class="profile-grid" id="profile-loading" hidden></div>
+      </section>
+    </main>
+
+    <div class="overlay" id="login-overlay">
+      <div class="login-card">
+        <div class="login-logo">Instagram</div>
+        <h2>Вход в аккаунт</h2>
+        <p class="login-sub">Клиент откроет настоящий Chrome. Войдите в нём как обычно — сессия сохранится локально.</p>
+        <ol class="login-steps">
+          <li><b>Включите VPN</b> в системном режиме, чтобы через него шёл Chrome.</li>
+          <li>Нажмите кнопку — откроется Instagram в отдельном окне.</li>
+          <li>Войдите в аккаунт; окно закроется само, когда сессия появится.</li>
+        </ol>
+        <button class="primary-btn primary-btn--wide" id="overlay-login-btn">Войти в Instagram</button>
+        <div class="login-waiting" id="login-waiting" hidden>
+          <span class="spinner"></span>
+          <span>Ждём вход в Instagram…</span>
+          <button class="link-btn" id="login-cancel-btn">Отмена</button>
+        </div>
+        <p class="login-note">Профиль браузера хранится в <code>data/browser-profile</code>. Не выкладывайте проект в интернет.</p>
+      </div>
+    </div>
+
+    <div class="modal" id="post-modal" hidden>
+      <div class="modal-backdrop" data-close="true"></div>
+      <div class="modal-card">
+        <button class="modal-close" id="modal-close-btn" aria-label="Закрыть">✕</button>
+        <div class="modal-media" id="modal-media"></div>
+        <div class="modal-info">
+          <div class="modal-head" id="modal-head"></div>
+          <div class="modal-caption" id="modal-caption"></div>
+          <div class="modal-stats" id="modal-stats"></div>
+          <div class="modal-thumbs" id="modal-thumbs"></div>
+          <div class="modal-actions">
+            <button class="primary-btn" id="modal-download-btn">Скачать всё</button>
+            <button class="ghost-btn" id="modal-copy-btn">Ссылка</button>
+            <button class="ghost-btn" id="modal-profile-btn">Профиль</button>
+          </div>
+        </div>
+        <button class="modal-post-nav modal-post-nav--left" id="modal-prev-post" title="Предыдущий пост" hidden>‹</button>
+        <button class="modal-post-nav modal-post-nav--right" id="modal-next-post" title="Следующий пост" hidden>›</button>
+      </div>
+    </div>
+
+    <div class="toasts" id="toasts"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>
